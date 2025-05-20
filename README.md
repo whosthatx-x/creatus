@@ -1,13 +1,20 @@
-# Creatus - AI Model Creator
 
-Creatus is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/whosthatx-x/creatus)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)](https://technokreate.streamlit.app)
+![Python](https://img.shields.io/badge/python-3.12-green?logo=python)
+
+# TechnoKreate - AI Model Creator
+
+TechnoKreate is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
 
 The app is accessible at: [technokreate.streamlit.app](https://technokreate.streamlit.app)
+
+![App](resources/app.png)
 
 ## Features
 1. **Manage Labels**: You can add custom labels and upload images corresponding to each label.
    
-2. **Train Model**: Once images are uploaded for at least two labels, Creatus allows you to train a custom CNN (Convolutional Neural Network) model.
+2. **Train Model**: Once images are uploaded for at least two labels, TechnoKreate allows you to train a custom CNN (Convolutional Neural Network) model.
 
 3. **Test Model**: After training, you can upload a new image and test the model’s prediction accuracy with confidence levels.
 
@@ -17,7 +24,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 
 6. **Progress Tracking**: The model training is displayed with a real-time progress bar to track the training process.
 
-7. **Usage Code**: Along with the model download, Creatus generates usage code in Python to load and make predictions using the trained model.
+7. **Usage Code**: Along with the model download, TechnoKreate generates usage code in Python to load and make predictions using the trained model.
 
 ## How to Use
 1. **Add Labels**: In the sidebar, enter the name of a label and click "Add Label".
@@ -31,15 +38,15 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 5. **Download the Model**: After training, choose your desired export format (TensorFlow Lite or H5) and click the "Download Model" button to download the model along with the usage code.
 
 ## Note
-Creatus offers more advanced customizability and flexibility compared to beginner-friendly platforms like Teachable Machine. It’s perfect for developers who want more control over their model creation process. However, for those who prefer simplicity, platforms like Teachable Machine might be a better starting point.
+TechnoKreate offers more advanced customizability and flexibility compared to beginner-friendly platforms like Teachable Machine. It’s perfect for developers who want more control over their model creation process. However, for those who prefer simplicity, platforms like Teachable Machine might be a better starting point.
 
 ## Warning
 Occasionally, a "ghosting" effect may occur during code execution due to delays. Don't worry, this is a normal occurrence.
 
-## Credits
-Creatus was created by **Pranav Lejith** (Amphibiar).
+## Credits and Contributions
+TechnoKreate was created by **Shreeya Prusty** (Developer).
 
 ---
 
-Explore Creatus at [creatus.streamlit.app](https://creatus.streamlit.app)
+Explore TechnoKreate at [technokreate.streamlit.app](https://technokreate.streamlit.app)
 
