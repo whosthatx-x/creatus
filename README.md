@@ -14,7 +14,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 ## Features
 1. **Manage Labels**: You can add custom labels and upload images corresponding to each label.
    
-2. **Train Model**: Once images are uploaded for at least two labels, Creatus allows you to train a custom CNN (Convolutional Neural Network) model.
+2. **Train Model**: Once images are uploaded for at least two labels, TechnoKreate allows you to train a custom CNN (Convolutional Neural Network) model.
 
 3. **Test Model**: After training, you can upload a new image and test the model’s prediction accuracy with confidence levels.
 
