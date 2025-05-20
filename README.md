@@ -5,7 +5,7 @@
 
 # TechnoKreate - AI Model Creator
 
-Creatus is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
+TechnoKreate is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
 
 The app is accessible at: [technokreate.streamlit.app](https://technokreate.streamlit.app)
 
