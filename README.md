@@ -1,8 +1,15 @@
-# Creatus - AI Model Creator
+
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/whosthatx-x/creatus)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)](https://technokreate.streamlit.app)
+![Python](https://img.shields.io/badge/python-3.12-green?logo=python)
+
+# TechnoKreate - AI Model Creator
 
 Creatus is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
 
 The app is accessible at: [technokreate.streamlit.app](https://technokreate.streamlit.app)
+
+![App](resources/app.png)
 
 ## Features
 1. **Manage Labels**: You can add custom labels and upload images corresponding to each label.
