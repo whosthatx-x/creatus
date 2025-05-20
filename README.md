@@ -38,7 +38,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 5. **Download the Model**: After training, choose your desired export format (TensorFlow Lite or H5) and click the "Download Model" button to download the model along with the usage code.
 
 ## Note
-Creatus offers more advanced customizability and flexibility compared to beginner-friendly platforms like Teachable Machine. It’s perfect for developers who want more control over their model creation process. However, for those who prefer simplicity, platforms like Teachable Machine might be a better starting point.
+TechnoKreate offers more advanced customizability and flexibility compared to beginner-friendly platforms like Teachable Machine. It’s perfect for developers who want more control over their model creation process. However, for those who prefer simplicity, platforms like Teachable Machine might be a better starting point.
 
 ## Warning
 Occasionally, a "ghosting" effect may occur during code execution due to delays. Don't worry, this is a normal occurrence.
