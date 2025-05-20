@@ -48,5 +48,5 @@ TechnoKreate was created by **Shreeya Prusty** (Developer).
 
 ---
 
-Explore TechnoKreate at [technoKreate.streamlit.app](https://technoKreate.streamlit.app)
+Explore TechnoKreate at [technokreate.streamlit.app](https://technokreate.streamlit.app)
 
