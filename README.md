@@ -2,7 +2,7 @@
 
 Creatus is an advanced, user-friendly platform designed to help developers create, train, and download AI models for image classification tasks. With a clean and intuitive interface, users can manage their labels, upload images, train their custom model, and test it. The trained models can be downloaded in both TensorFlow Lite (.tflite) and H5 (.h5) formats, making it easy to deploy on various platforms.
 
-The app is accessible at: [creatus.streamlit.app](https://technokreate.streamlit.app)
+The app is accessible at: [technokreate.streamlit.app](https://technokreate.streamlit.app)
 
 ## Features
 1. **Manage Labels**: You can add custom labels and upload images corresponding to each label.
