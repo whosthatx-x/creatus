@@ -43,7 +43,7 @@ TechnoKreate offers more advanced customizability and flexibility compared to be
 ## Warning
 Occasionally, a "ghosting" effect may occur during code execution due to delays. Don't worry, this is a normal occurrence.
 
-## Credits
+## Credits and Contributions
 TechnoKreate was created by **Pranav Lejith** (Amphibiar).
 
 ---
