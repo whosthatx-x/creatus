@@ -1,7 +1,35 @@
+<p align="center">
+   <span style="font-weight:bold; font-size:28px; color:#FF5733;">
+    💻 My workspace
+  </span><br/><br/>
+  <a href="https://github.com/whosthatx-x/technokreate" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
+  </a>
+  <a href="https://technokreate.streamlit.app" target="_blank">
+    <img src="https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit App" />
+  </a>
+  <img src="https://img.shields.io/badge/python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12" />
+  <img src="https://img.shields.io/badge/windows-11-00A4EF?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 11" />
+  <img src="https://img.shields.io/badge/intel-Core_i7-0071C5?style=for-the-badge&logo=intel&logoColor=white" alt="Intel Core i7" />
+  <img src="https://img.shields.io/badge/architecture-Intel-00A1F1?style=for-the-badge" alt="Architecture Intel" />
+  <img src="https://img.shields.io/badge/ram-32GB-6F42C1?style=for-the-badge" alt="32GB RAM" />
+  <img src="https://img.shields.io/badge/VS_Code-Visual_Studio_Code-005FCC?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code" />
+  <img src="https://img.shields.io/badge/Linux-Tux-FAA61A?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
+  <img src="https://img.shields.io/badge/Fedora-Blue-294172?style=for-the-badge&logo=fedora&logoColor=white" alt="Fedora" />
+  <img src="https://img.shields.io/badge/Debugging-Debug-FF8C00?style=for-the-badge&logo=bug&logoColor=white" alt="Debugging" />
+  <img src="https://img.shields.io/badge/USB-Device-0078D7?style=for-the-badge&logo=usb&logoColor=white" alt="USB" />
+  <img src="https://img.shields.io/badge/AI-Artificial_Intelligence-8A2BE2?style=for-the-badge&logo=artificial-intelligence&logoColor=white" alt="AI" />
+  <img src="https://img.shields.io/badge/license-MIT-3BB54A?style=for-the-badge" alt="License MIT" />
+  <img src="https://img.shields.io/badge/Scikit--learn-F37626?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-learn" />
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" />
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" />
+  <img src="https://img.shields.io/badge/tests-passing-brightgreen?style=for-the-badge" alt="Tests Passing" />
+  <img src="https://img.shields.io/badge/language-English-007ACC?style=for-the-badge&logo=googletranslate&logoColor=white" alt="English Language" />
+  <img src="https://img.shields.io/badge/Technokreate-00BFFF?style=for-the-badge&logo=appveyor&logoColor=white" alt="Technokreate" />
+</p>
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/whosthatx-x/creatus)
-[![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)](https://technokreate.streamlit.app)
-![Python](https://img.shields.io/badge/python-3.12-green?logo=python)
+
+
 
 # TechnoKreate - AI Model Creator
 
@@ -45,6 +73,10 @@ Occasionally, a "ghosting" effect may occur during code execution due to delays.
 
 ## Credits and Contributions
 TechnoKreate was created by **Shreeya Prusty** (Developer).
+
+# For Developers 
+
+<img src="resources/Flowchart.png" alt="Flowchart" width="900" height="950" />
 
 ---
 
