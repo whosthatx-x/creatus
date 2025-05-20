@@ -48,5 +48,5 @@ Creatus was created by **Pranav Lejith** (Amphibiar).
 
 ---
 
-Explore Creatus at [creatus.streamlit.app](https://creatus.streamlit.app)
+Explore Creatus at [TechnoKreate.streamlit.app](https://TechnoKreate.streamlit.app)
 
