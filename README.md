@@ -24,7 +24,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 
 6. **Progress Tracking**: The model training is displayed with a real-time progress bar to track the training process.
 
-7. **Usage Code**: Along with the model download, Creatus generates usage code in Python to load and make predictions using the trained model.
+7. **Usage Code**: Along with the model download, TechnoKreate generates usage code in Python to load and make predictions using the trained model.
 
 ## How to Use
 1. **Add Labels**: In the sidebar, enter the name of a label and click "Add Label".
