@@ -69,7 +69,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
 TechnoKreate offers more advanced customizability and flexibility compared to beginner-friendly platforms like Teachable Machine. It’s perfect for developers who want more control over their model creation process. However, for those who prefer simplicity, platforms like Teachable Machine might be a better starting point.
 
 ## Warning
-Occasionally, a "ghosting" effect may occur during code execution due to delays. Don't worry, this is a normal occurrence.
+Occasionally, a "ghosting" effect may occur during code execution due to delays. Don't worry, as this is a normal occurrence with streamlit applications.
 
 ## Credits and Contributions
 TechnoKreate was created by **Shreeya Prusty** (Developer).
