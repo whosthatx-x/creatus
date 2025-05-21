@@ -1,7 +1,7 @@
 <p align="center">
-   <span style="font-weight:bold; font-size:28px; color:#FF5733;">
+<!--    <span style="font-weight:bold; font-size:28px; color:#FF5733;">
     💻 My workspace
-  </span><br/><br/>
+  </span><br/><br/> -->
   <a href="https://github.com/whosthatx-x/technokreate" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
   </a>
