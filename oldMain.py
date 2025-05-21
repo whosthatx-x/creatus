@@ -1,3 +1,5 @@
+# The old project file for the CREATUS Application
+
 import streamlit as st
 import tensorflow as tf
 import numpy as np
