@@ -25,7 +25,7 @@
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" />
   <img src="https://img.shields.io/badge/tests-passing-brightgreen?style=for-the-badge" alt="Tests Passing" />
   <img src="https://img.shields.io/badge/language-English-007ACC?style=for-the-badge&logo=googletranslate&logoColor=white" alt="English Language" />
-  <img src="https://img.shields.io/badge/Technokreate-00BFFF?style=for-the-badge&logo=appveyor&logoColor=white" alt="Technokreate" />
+  <img src="https://img.shields.io/badge/Technokreate-FF4B4B?style=for-the-badge&logo=taipy&logoColor=white" alt="Technokreate" />
 </p>
 
 
