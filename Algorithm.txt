@@ -1,0 +1,111 @@
+﻿TechnoKreate Image Classifier – Algorithm Overview
+________________
+
+
+1. Initialize App
+* Set Streamlit page config
+
+* Initialize st.session_state variables for:
+
+   * Labels, classes, label mapping, model, developer state
+
+   * Initial load and splash screen triggers
+
+________________
+
+
+2. Splash Screen
+      * If first load → show TechnoKreate splash
+
+      * If developer override entered → show developer splash
+
+      * Else → run main interface
+
+________________
+
+
+3. Label Management
+         * Sidebar:
+
+            * Text input for new label
+
+            * If input matches developer command → enter developer mode
+
+            * Else, add label to state if unique
+
+               * For each label:
+
+                  * Show image uploader (multi-file)
+
+                  * Convert each image to array and resize (64x64)
+
+                  * Store image arrays in st.session_state['labels'][label]
+
+                     * List existing labels with delete button
+
+________________
+
+
+4. Model Training Options
+                        * If >1 label:
+
+                           * Show button to start training
+
+                           * Collect:
+
+                              * Model architecture (Simple CNN, VGG, ResNet, Custom)
+
+                              * Epochs, learning rate, batch size
+
+                              * (If developer) customization like dropout, early stopping, optimizer, augmentation
+
+                                 * On training:
+
+                                    * Flatten images and convert labels to one-hot
+
+                                    * Train model using train_model() function
+
+                                    * Show progress bar using custom callback
+
+                                    * Save training history in model object
+
+________________
+
+
+5. Testing
+                                       * If model is trained:
+
+                                          * Upload a single test image
+
+                                          * Show uploaded image
+
+                                          * Preprocess and predict using test_model()
+
+                                          * Display label and confidence
+
+________________
+
+
+6. Model Download
+                                             * If model is trained:
+
+                                                * User selects .h5 or .tflite format
+
+                                                * On download:
+
+                                                   * Package model + label_mapping.py + main.py (usage script) into a .zip
+
+                                                   * Streamlit download button
+
+________________
+
+
+7. Developer Features
+Only visible after entering override:
+                                                      * Custom themes
+
+                                                      * Custom model architecture (# conv/dense layers, activations)
+
+                                                      * Regularization (dropout, L2)
+
+                                                      * TensorBoard logs (not yet implemented)
