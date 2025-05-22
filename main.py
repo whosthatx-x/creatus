@@ -5,18 +5,15 @@ from tensorflow.keras.preprocessing import image
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout
-from tensorflow.keras.optimizers import Adam, SGD, RMSprop
+from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
 import zipfile
 from io import BytesIO
 import time
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from chatbot import chatbot_response
 
 # Set page config
-st.set_page_config(page_title="Creatus", page_icon='logo.png', menu_items={
-    'About': "# :red[Creator]:blue[:] :violet[Pranav Lejith(:green[Amphibiar])]"
+st.set_page_config(page_title="TechnoKreate", page_icon='logo.png', menu_items={
+    'About': "# :red[Creator]:blue[:] :violet[Shreeya Prusty(:green[Developer])]"
 }, layout='wide')
 
 # Initialize session state keys
@@ -28,8 +25,6 @@ if 'label_mapping' not in st.session_state:
     st.session_state['label_mapping'] = {}
 if 'model' not in st.session_state:
     st.session_state['model'] = None
-if 'metrics' not in st.session_state:
-    st.session_state['metrics'] = None
 if 'is_developer' not in st.session_state:
     st.session_state['is_developer'] = False
 if 'show_developer_splash' not in st.session_state:
@@ -38,16 +33,16 @@ if 'initial_load' not in st.session_state:
     st.session_state['initial_load'] = True
 if 'dev_command_entered' not in st.session_state:
     st.session_state['dev_command_entered'] = False
-if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = []
-if 'show_chat' not in st.session_state:
-    st.session_state['show_chat'] = False
 
 # Developer authentication (hidden from normal users)
 developer_commands = [
     'override protocol-amphibiar', 'override command-amphibiar', 
     'command override-amphibiar', 'command override-amphibiar23', 
-    'control override-amphibiar', 'system override-amphibiar', 'user:amphibiar'
+    'control override-amphibiar', 'system override-amphibiar', 'user:amphibiar',
+    'user:amphibiar-developer', 'user:amphibiar-admin', 'user:amphibiar-root',
+    'control-admin', 'control-amphibiar','initiate override-amphibiar','currentuser:amphibiar',
+    'initiate control override-amphibiar', 'initiate control-amphibiar','switch control-amphibiar'
+    'override emergency protocol-amphibiar'
 ]
 
 # Custom HTML for splash screen with typewriter effect
@@ -61,7 +56,7 @@ def create_splash_html(text, color):
       margin: 0 auto;
       letter-spacing: .15em;
       border-right: .15em solid orange;
-      animation: typing 3.5s steps(30, end), blink-caret .5s step-end infinite;
+      animation: typing 2s steps(30, end), blink-caret .5s step-end infinite;
     }}
 
     @keyframes typing {{
@@ -79,50 +74,19 @@ def create_splash_html(text, color):
     </div>
     """
 
-# Chat interface
-def chat_interface():
-    st.sidebar.subheader("Chat with Creatus AI")
-    
-    # Display chat history
-    for message in st.session_state['chat_history']:
-        with st.sidebar.chat_message(message["role"]):
-            st.sidebar.write(message["content"])
-
-    # Chat input
-    user_input = st.sidebar.chat_input("Ask about Creatus...")
-
-    if user_input:
-        # Add user message to chat history
-        st.session_state['chat_history'].append({"role": "user", "content": user_input})
-        
-        # Get AI response
-        ai_response = chatbot_response(user_input)
-        
-        # Add AI response to chat history
-        st.session_state['chat_history'].append({"role": "assistant", "content": ai_response})
-        
-        # Rerun to update the chat display
-    
-
 # Main content
 def main_content():
-    st.title(":red[Creatus (Model Creator)]")
+    st.title(":red[TechnoKreate (Model Creator)]")
 
     # Sidebar for label input
     st.sidebar.title(":blue[Manage Labels]")
 
-    # Add reset button for developer mode
-    if st.session_state['is_developer']:
-        if st.sidebar.button("Reset to Normal User"):
-            st.session_state['is_developer'] = False
-        
-
-    label_input = st.sidebar.text_input("Enter a new label:")
-    if st.sidebar.button("Add Label"):
+    label_input = st.sidebar.text_input(":red[Enter a new label:]")
+    if st.sidebar.button(":violet[Add Label]"):
         if label_input in developer_commands:
+            st.session_state['dev_command_entered'] = True
             st.session_state['is_developer'] = True
             st.session_state['show_developer_splash'] = True
-        
         elif label_input and label_input not in st.session_state['labels']:
             st.session_state['labels'][label_input] = []
             st.session_state['num_classes'] += 1
@@ -130,8 +94,25 @@ def main_content():
         else:
             st.sidebar.warning("Label already exists or is empty.")
 
+    # Display the existing labels and allow image upload in rows
+    if st.session_state['num_classes'] > 0:
+        num_columns = 3
+        cols = st.columns(num_columns)
+
+        for i, label in enumerate(st.session_state['labels']):
+            with cols[i % num_columns]:
+                st.subheader(f"Upload images for label: {label}")
+                uploaded_files = st.file_uploader(f"Upload images for {label}", accept_multiple_files=True, type=['jpg', 'jpeg', 'png', 'webp'], key=label)
+
+                if uploaded_files:
+                    for uploaded_file in uploaded_files:
+                        image_data = image.load_img(uploaded_file, target_size=(64, 64))
+                        image_array = image.img_to_array(image_data)
+                        st.session_state['labels'][label].append(image_array)
+                    st.success(f"Uploaded {len(uploaded_files)} images for label '{label}'.")
+
     # Display labels with delete buttons
-    st.sidebar.subheader("Existing Labels")
+    st.sidebar.subheader(":orange[Existing Labels]")
     for label in list(st.session_state['labels'].keys()):
         col1, col2 = st.sidebar.columns([0.8, 0.2])
         col1.write(label)
@@ -140,49 +121,90 @@ def main_content():
             st.session_state['num_classes'] -= 1
 
     # Dropdown to select model export format
-    export_format = st.sidebar.selectbox("Select model export format:", options=["tflite", "h5"])
-
-    # Display the existing labels and allow image upload in rows
-    if st.session_state['num_classes'] > 0:
-        num_columns = 3  # Adjust this value for the number of columns you want
-        cols = st.columns(num_columns)
-        
-        for i, label in enumerate(st.session_state['labels']):
-            with cols[i % num_columns]:  # Wrap to the next line
-                st.subheader(f"Upload images for label: {label}")
-                uploaded_files = st.file_uploader(f"Upload images for {label}", accept_multiple_files=True, type=['jpg', 'jpeg', 'png'], key=label)
-                
-                if uploaded_files:
-                    for uploaded_file in uploaded_files:
-                        image_data = image.load_img(uploaded_file, target_size=(64, 64))
-                        image_array = image.img_to_array(image_data)
-                        st.session_state['labels'][label].append(image_array)
-                    st.success(f"Uploaded {len(uploaded_files)} images for label '{label}'.")
+    export_format = st.sidebar.selectbox(":blue[Select model export format:]", options=["tflite", "h5"])
 
     # Advanced options in sidebar
-    with st.sidebar.expander("Advanced Options"):
+    with st.sidebar.expander("Advanced Options", expanded=st.session_state['is_developer']):
         epochs = st.number_input("Epochs", min_value=1, max_value=1000, value=10)
+        learning_rate = st.number_input("Learning Rate", min_value=0.0001, max_value=0.1, value=0.001, format="%.4f")
+        batch_size = st.number_input("Batch Size", min_value=1, max_value=128, value=32)
+
+        model_architecture = "Simple CNN"
+
         if st.session_state['is_developer']:
-            learning_rate = st.number_input("Learning Rate", min_value=0.0001, max_value=0.1, value=0.001, format="%.4f")
-            batch_size = st.number_input("Batch Size", min_value=1, max_value=128, value=32)
+            st.subheader("Developer Options")
+
+            # Theme customization
+            theme = st.selectbox("Theme", ["Light", "Dark", "Custom"])
+            if theme == "Custom":
+                primary_color = st.color_picker("Primary Color", "#FF4B4B")
+                secondary_color = st.color_picker("Secondary Color", "#0068C9")
+                background_color = st.color_picker("Background Color", "#FFFFFF")
+                text_color = st.color_picker("Text Color", "#262730")
+
+                # Apply custom theme
+                st.markdown(f"""
+                    <style>
+                    :root {{
+                        --primary-color: {primary_color};
+                        --secondary-color: {secondary_color};
+                        --background-color: {background_color};
+                        --text-color: {text_color};
+                    }}
+                    body {{
+                        color: var(--text-color);
+                        background-color: var(--background-color);
+                    }}
+                    .stButton > button {{
+                        color: var(--background-color);
+                        background-color: var(--primary-color);
+                    }}
+                    .stTextInput > div > div > input {{
+                        color: var(--text-color);
+                    }}
+                    </style>
+                """, unsafe_allow_html=True)
+
+            # Model architecture options
             model_architecture = st.selectbox("Model Architecture", ["Simple CNN", "VGG-like", "ResNet-like", "Custom"])
             if model_architecture == "Custom":
                 num_conv_layers = st.number_input("Number of Convolutional Layers", min_value=1, max_value=10, value=3)
                 num_dense_layers = st.number_input("Number of Dense Layers", min_value=1, max_value=5, value=2)
                 activation_function = st.selectbox("Activation Function", ["relu", "leaky_relu", "elu", "selu"])
-            optimizer = st.selectbox("Optimizer", ["Adam", "SGD", "RMSprop"])
+
+            # Data augmentation options
             data_augmentation = st.checkbox("Enable Data Augmentation")
             if data_augmentation:
-                rotation_range = st.slider("Rotation Range", 0, 180, 20)
+                rotation_range = st.slider("Rotation Range (Degrees)", 0, 180, 20)
                 zoom_range = st.slider("Zoom Range", 0.0, 1.0, 0.2)
-                horizontal_flip = st.checkbox("Horizontal Flip")
+                horizontal_flip = st.checkbox("Horizontal Flip", value=True)
                 vertical_flip = st.checkbox("Vertical Flip")
-        else:
-            learning_rate = 0.001
-            batch_size = 32
-            model_architecture = "Simple CNN"
-            optimizer = "Adam"
-            data_augmentation = False
+
+            # Training options
+            early_stopping = st.checkbox("Enable Early Stopping")
+            if early_stopping:
+                patience = st.number_input("Early Stopping Patience", min_value=1, max_value=20, value=5)
+
+            # Optimization options
+            optimizer = st.selectbox("Optimizer", ["Adam", "SGD", "RMSprop"])
+            if optimizer == "SGD":
+                momentum = st.slider("Momentum", 0.0, 1.0, 0.9)
+
+            # Regularization options
+            l2_regularization = st.checkbox("L2 Regularization")
+            if l2_regularization:
+                l2_lambda = st.number_input("L2 Lambda", min_value=0.0001, max_value=0.1, value=0.001, format="%.4f")
+
+            dropout = st.checkbox("Dropout")
+            if dropout:
+                dropout_rate = st.slider("Dropout Rate", 0.0, 0.5, 0.2)
+
+            # Advanced visualization options
+            show_model_summary = st.checkbox("Show Model Summary")
+            plot_training_history = st.checkbox("Plot Training History")
+
+            # Export options
+            export_tensorboard_logs = st.checkbox("Export TensorBoard Logs")
 
     # Button to train the model
     if st.session_state['num_classes'] > 1:
@@ -190,42 +212,86 @@ def main_content():
             all_images = []
             all_labels = []
             st.session_state['label_mapping'] = {label: idx for idx, label in enumerate(st.session_state['labels'].keys())}
-            
+
             for label, images in st.session_state['labels'].items():
                 all_images.extend(images)
                 all_labels.extend([st.session_state['label_mapping'][label]] * len(images))
-            
+
             if len(all_images) > 0:
-                st.write("Training thxp model...")
-                progress_bar = st.progress(0)  # Initialize progress bar
-                st.session_state['model'], st.session_state['metrics'] = train_model(
-                    all_images, all_labels, st.session_state['num_classes'], epochs, progress_bar,
-                    learning_rate=learning_rate, batch_size=batch_size, model_architecture=model_architecture,
-                    optimizer=optimizer, data_augmentation=data_augmentation
-                )
-                st.toast('Model Trained Successfully',icon='✅')
+                st.write("Training the model...")
+                progress_bar = st.progress(0)
+
+                training_options = {
+                    "learning_rate": learning_rate,
+                    "batch_size": batch_size,
+                    "model_architecture": model_architecture,
+                    "data_augmentation": st.session_state['is_developer'] and data_augmentation,
+                    "early_stopping": st.session_state['is_developer'] and early_stopping,
+                }
+
+                if st.session_state['is_developer']:
+                    if model_architecture == "Custom":
+                        training_options.update({
+                            "num_conv_layers": num_conv_layers,
+                            "num_dense_layers": num_dense_layers,
+                            "activation_function": activation_function,
+                        })
+
+                    if data_augmentation:
+                        training_options.update({
+                            "rotation_range": rotation_range,
+                            "zoom_range": zoom_range,
+                            "horizontal_flip": horizontal_flip,
+                            "vertical_flip": vertical_flip,
+                        })
+
+                    if early_stopping:
+                        training_options["patience"] = patience
+
+                    training_options["optimizer"] = optimizer
+                    if optimizer == "SGD":
+                        training_options["momentum"] = momentum
+
+                    if l2_regularization:
+                        training_options["l2_lambda"] = l2_lambda
+
+                    if dropout:
+                        training_options["dropout_rate"] = dropout_rate
+
+                st.session_state['model'] = train_model(all_images, all_labels, st.session_state['num_classes'], epochs, progress_bar, **training_options)
+
+                if st.session_state['is_developer']:
+                    if show_model_summary:
+                        st.subheader("Model Summary")
+                        st.text(st.session_state['model'].summary())
+
+                    if plot_training_history and hasattr(st.session_state['model'], 'history'):
+                        st.subheader("Training History")
+                        col1, col2 = st.columns([1, 3])
+                        with col2:
+                            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6))
+                            ax1.plot(st.session_state['model'].history.history['accuracy'])
+                            ax1.plot(st.session_state['model'].history.history['val_accuracy'])
+                            ax1.set_title('Model Accuracy')
+                            ax1.set_ylabel('Accuracy')
+                            ax1.set_xlabel('Epoch')
+                            ax1.legend(['Train', 'Validation'], loc='lower right')
+
+                            ax2.plot(st.session_state['model'].history.history['loss'])
+                            ax2.plot(st.session_state['model'].history.history['val_loss'])
+                            ax2.set_title('Model Loss')
+                            ax2.set_ylabel('Loss')
+                            ax2.set_xlabel('Epoch')
+                            ax2.legend(['Train', 'Validation'], loc='upper right')
+
+                            plt.tight_layout()
+                            st.pyplot(fig)
+
+                    if export_tensorboard_logs:
+                        pass
+
+                st.toast('Model Trained Successfully')
                 st.success("Model trained!")
-
-                # Display model performance metrics
-                if st.session_state['metrics'] is not None:
-                    st.subheader("Model Performance Metrics")
-                    metrics = st.session_state['metrics']
-                    st.write(f"Accuracy: {metrics['accuracy']:.4f}")
-                    st.write(f"Precision: {metrics['precision']:.4f}")
-                    st.write(f"Recall: {metrics['recall']:.4f}")
-                    st.write(f"F1 Score: {metrics['f1_score']:.4f}")
-
-                    # Visualize metrics
-                    fig, ax = plt.subplots()
-                    metrics_names = list(metrics.keys())
-                    metrics_values = list(metrics.values())
-                    ax.bar(metrics_names, metrics_values)
-                    ax.set_ylim(0, 1)
-                    ax.set_title("Model Performance Metrics")
-                    ax.set_ylabel("Score")
-                    for i, v in enumerate(metrics_values):
-                        ax.text(i, v, f"{v:.4f}", ha='center', va='bottom')
-                    st.pyplot(fig)
             else:
                 st.error("Please upload some images before training.")
     else:
@@ -235,9 +301,8 @@ def main_content():
     if st.session_state['model'] is not None:
         st.subheader("Test the trained model with a new image")
         test_image = st.file_uploader("Upload an image to test", type=['jpg', 'jpeg', 'png','webp'], key="test")
-        
+
         if test_image:
-            # Show image preview
             test_image_data = image.load_img(test_image, target_size=(64, 64))
             st.image(test_image_data, caption="Uploaded Image", use_column_width=True)
 
@@ -251,7 +316,7 @@ def main_content():
     if st.session_state['model'] is not None and st.button("Download Model"):
         try:
             buffer = save_model(st.session_state['model'], export_format, st.session_state['label_mapping'])
-            
+
             st.download_button(
                 label="Download the trained model and usage code",
                 data=buffer,
@@ -261,47 +326,64 @@ def main_content():
         except Exception as e:
             st.error(f"Error: {e}")
 
-    # Chat button
-    if st.button("Ask AI", key="open_chat"):
-        st.session_state['show_chat'] = not st.session_state['show_chat']
+    st.sidebar.write("This app was created by :red[**Shreeya Prusty**](:violet[**Developer**])")
+    st.sidebar.write(":green[Beginners are advised not to change any of the advanced options as it affects the model training process. Any doubts or errors or any suggestions to improve the app further may be discussed with the Developer.]")
 
-    if st.session_state['show_chat']:
-        chat_interface()
+    st.sidebar.header(":orange[**Usage Instructions**]")
+    st.sidebar.write("""
+    ### :red[Step 1: Add Labels]
+    1. In the sidebar, enter the name of a label in the "Enter a new label" input field.
+    2. Click the "Add Label" button to add the label.
 
-    st.sidebar.write("This app was created by :red[Pranav Lejith](:violet[Amphibiar])")
-    st.sidebar.subheader(":orange[Usage Instructions]")
-    st.sidebar.write(""" 
-    1) Manage Labels: Enter a new label and upload images for that label.
-                     
-    2) Train Model: After uploading images for at least two labels, you can train the model.
-                     
-    3) Test Model: Once the model is trained, you can test it with new images and see predictions along with confidence levels.
-                     
-    4) Download Model: Finally, you can download the trained model in TensorFlow Lite or .h5 format for use in other applications. Tensorflow lite model is better because it is smaller in size as compared to the .h5 model so it can be used in many applications which have a file size limit.
-                     
+    ### :red[Step 2: Upload Images]
+    1. For each label, you will see a section to upload images.
+    2. Click the "Upload images for [label]" button to open the file uploader.
+    3. Select the images corresponding to the label and upload them.
+    4. Repeat this process for all labels.
 
+    ### :red[Step 3: Train the Model]
+    1. Once you have uploaded images for at least two labels, click the "Train Model" button.
+    2. The model will start training, and you can see the progress in real-time.
+    3. After the training is complete, you will receive a success message.
+
+    ### :red[Step 4: Test the Model]
+    1. Upload an image to test the trained model by clicking the "Upload an image to test" button.
+    2. The model will predict the label of the uploaded image and display the confidence score.
+
+    ### :red[Step 5: Download the Model]
+    1. After training, choose your desired export format (TensorFlow Lite or H5) from the sidebar.
+    2. Click the "Download Model" button to download the model along with the usage code.
     """, unsafe_allow_html=True)
-    st.sidebar.subheader(":red[Warning]")
-    st.sidebar.write('The code might produce a ghosting effect sometimes. Do not panic due to the Ghosting effect. It is caused due to delay in code execution.')
+    
+    st.sidebar.header(":blue[Note]  :green[ from]  :red[ Developer]")
+    st.sidebar.write('The TechnoKreate model creator is slightly more efficient than the teachable machine model creator as TechnoKreate provides more customizability. But, for beginners, teachable machine might be a more comfortable option due to its simplicity and user friendly interface. But for advanced developers, TechnoKreate will be more preferred choice.')
+    st.sidebar.header(':blue[Definitions]  ')
+    st.sidebar.write("""
+    
+    **:orange[Epochs:]**
+    An epoch is when all the training data is used at once and is defined as the total number of iterations of all the training data in one cycle for training the machine learning model. Another way to define an epoch is the number of passes a training dataset takes around an algorithm.
 
-    st.sidebar.subheader(":blue[Note]  :green[ from]  :red[ Developer]:")
-    st.sidebar.write('The Creatus model creator is slightly more efficient than the teachable machine model creator as Creatus provides more customizability. But, for beginners, teachable machine might be a more comfortable option due to its simplicity and user friendly interface. But for advanced developers, Creatus will be more preferred choice.')
+    """)
+    st.sidebar.subheader(":red[**Warning**]")
+    st.sidebar.write('The code might produce a ghosting effect sometimes. Do not panic due to the Ghosting effect. It is caused due to delay in code execution and is compeletely normal.')
+    if st.session_state['is_developer']:
+        if st.sidebar.button("Reset to Normal User", key="reset_button"):
+            st.session_state['is_developer'] = False
+            st.session_state['dev_command_entered'] = False
 
-# Define a function to train the model with progress
+
+
+
 def train_model(images, labels, num_classes, epochs, progress_bar, **kwargs):
     X = np.array(images)
     y = np.array(labels)
 
-    # Normalize the pixel values to be between 0 and 1
     X = X / 255.0
 
-    # One-hot encode the labels
     y = to_categorical(y, num_classes)
 
-    # Split the dataset into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Create the CNN model
     model_architecture = kwargs.get('model_architecture', 'Simple CNN')
     if model_architecture == "Simple CNN":
         model = Sequential([
@@ -349,75 +431,70 @@ def train_model(images, labels, num_classes, epochs, progress_bar, **kwargs):
         num_conv_layers = kwargs.get('num_conv_layers', 3)
         num_dense_layers = kwargs.get('num_dense_layers', 2)
         activation_function = kwargs.get('activation_function', 'relu')
-        
+
         model = Sequential()
-        model.add(Conv2D(32, (3, 3), activation=activation_function, input_shape=(64, 64, 3)))
+        model.add(Conv2D(32, (3, 3), activation=activation_function, padding='same', input_shape=(64, 64, 3)))
         model.add(MaxPooling2D((2, 2)))
-        
+
         for i in range(num_conv_layers - 1):
-            model.add(Conv2D(64 * (2**i), (3, 3), activation=activation_function))
-            model.add(MaxPooling2D((2, 2)))
-        
+            model.add(Conv2D(64 * (2**i), (3, 3), activation=activation_function, padding='same'))
+            if i < num_conv_layers - 2:
+                model.add(MaxPooling2D((2, 2)))
+
         model.add(Flatten())
-        
+
         for _ in range(num_dense_layers - 1):
             model.add(Dense(128, activation=activation_function))
-        
+
         model.add(Dense(num_classes, activation='softmax'))
 
-    # Compile the model
-    optimizer_name = kwargs.get('optimizer', 'Adam')
+    optimizer = kwargs.get('optimizer', 'Adam')
     learning_rate = kwargs.get('learning_rate', 0.001)
-    if optimizer_name == 'Adam':
-        optimizer = Adam(learning_rate=learning_rate)
-    elif optimizer_name == 'SGD':
-        optimizer = SGD(learning_rate=learning_rate, momentum=0.9)
-    elif optimizer_name == 'RMSprop':
-        optimizer = RMSprop(learning_rate=learning_rate)
 
-    model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+    if optimizer == 'Adam':
+        opt = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+    elif optimizer == 'SGD':
+        momentum = kwargs.get('momentum', 0.9)
+        opt = tf.keras.optimizers.SGD(learning_rate=learning_rate, momentum=momentum)
+    elif optimizer == 'RMSprop':
+        opt = tf.keras.optimizers.RMSprop(learning_rate=learning_rate)
 
-    # Data augmentation
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+
     if kwargs.get('data_augmentation', False):
-        data_gen = tf.keras.preprocessing.image.ImageDataGenerator(
-            rotation_range=kwargs.get('rotation_range', 20),
-            width_shift_range=0.2,
-            height_shift_range=0.2,
-            shear_range=0.2,
-            zoom_range=kwargs.get('zoom_range', 0.2),
-            horizontal_flip=kwargs.get('horizontal_flip', True),
-            vertical_flip=kwargs.get('vertical_flip', False),
-            fill_mode='nearest'
-        )
-        data_gen.fit(X_train)
-        train_generator = data_gen.flow(X_train, y_train, batch_size=kwargs.get('batch_size', 32))
-        steps_per_epoch = len(X_train) // kwargs.get('batch_size', 32)
-        
-        # Train the model with progress reporting
-        for epoch in range(epochs):
-            model.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=1, validation_data=(X_test, y_test))
-            progress_bar.progress((epoch + 1) / epochs)  # Update the progress bar
-    else:
-        # Train the model with progress reporting
-        for epoch in range(epochs):
-            model.fit(X_train, y_train, epochs=1, validation_data=(X_test, y_test), batch_size=kwargs.get('batch_size', 32))
-            progress_bar.progress((epoch + 1) / epochs)  # Update the progress bar
+        data_augmentation = tf.keras.Sequential([
+            tf.keras.layers.RandomFlip("horizontal"),
+            tf.keras.layers.RandomRotation(kwargs.get('rotation_range', 20) / 180.0),
+            tf.keras.layers.RandomZoom(kwargs.get('zoom_range', 0.2)),
+        ])
+        if kwargs.get('vertical_flip', False):
+            data_augmentation.add(tf.keras.layers.RandomFlip("vertical"))
 
-    # Evaluate the model
-    y_pred = model.predict(X_test)
-    y_pred_classes = np.argmax(y_pred, axis=1)
-    y_true_classes = np.argmax(y_test, axis=1)
+        X_train = data_augmentation(X_train)
 
-    metrics = {
-        'accuracy': accuracy_score(y_true_classes, y_pred_classes),
-        'precision': precision_score(y_true_classes, y_pred_classes, average='weighted'),
-        'recall': recall_score(y_true_classes, y_pred_classes, average='weighted'),
-        'f1_score': f1_score(y_true_classes, y_pred_classes, average='weighted')
-    }
+    callbacks = []
+    if kwargs.get('early_stopping', False):
+        early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=kwargs.get('patience', 5))
+        callbacks.append(early_stop)
 
-    return model, metrics
+    class ProgressBarCallback(tf.keras.callbacks.Callback):
+        def __init__(self, epochs, progress_bar):
+            self.epochs = epochs
+            self.progress_bar = progress_bar
 
-# Function to save the model in the specified format
+        def on_epoch_end(self, epoch, logs=None):
+            current_progress = (epoch + 1) / self.epochs
+            self.progress_bar.progress(current_progress)
+
+    progress_callback = ProgressBarCallback(epochs, progress_bar)
+    callbacks.append(progress_callback)
+
+    history = model.fit(X_train, y_train, epochs=epochs, validation_data=(X_test, y_test),
+                        batch_size=kwargs.get('batch_size', 32), callbacks=callbacks)
+
+    model.history = history
+    return model
+
 def save_model(model, export_format, label_mapping):
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, "w") as zf:
@@ -444,10 +521,6 @@ interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-# Load labels
-with open('labels.txt', 'r') as f:
-    labels = [line.strip() for line in f.readlines()]
-
 # Prepare the image
 image_path = input("Enter the path to your image: ")
 img = preprocess_image(image_path)
@@ -457,8 +530,9 @@ interpreter.set_tensor(input_details[0]['index'], img)
 interpreter.invoke()
 
 output = interpreter.get_tensor(output_details[0]['index'])
-predicted_label_index = np.argmax(output)
-print(f"Predicted Label: {labels[predicted_label_index]}")
+predicted_label = np.argmax(output)
+label_mapping = {label_mapping[label]: label for label in label_mapping}
+print(f"Predicted Label: {label_mapping[predicted_label]}")
 print(f"Confidence: {np.max(output):.2f}")
 """
         elif export_format == 'h5':
@@ -479,40 +553,32 @@ def preprocess_image(image_path):
 # Load the model
 model = tf.keras.models.load_model('model.h5')
 
-# Load labels
-with open('labels.txt', 'r') as f:
-    labels = [line.strip() for line in f.readlines()]
-
 # Prepare the image
 image_path = input("Enter the path to your image: ")
 img = preprocess_image(image_path)
 
 # Test the model
 prediction = model.predict(img)
-predicted_label_index = np.argmax(prediction)
-print(f"Predicted Label: {labels[predicted_label_index]}")
+predicted_label = np.argmax(prediction)
+label_mapping = {label_mapping[label]: label for label in label_mapping}
+print(f"Predicted Label: {label_mapping[predicted_label]}")
 print(f"Confidence: {np.max(prediction):.2f}")
 """
 
         zf.writestr("main.py", usage_code)
-        
-        # Create and add labels.txt file
-        labels_content = "\n".join(label_mapping.keys())
-        zf.writestr("labels.txt", labels_content)
+        zf.writestr("label_mapping.py", f"label_mapping = {label_mapping}")
 
     buffer.seek(0)
     return buffer
 
-# Function to test the model with a new image
 def test_model(model, img_array, label_mapping):
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-    img_array = img_array / 255.0  # Normalize the image
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = img_array / 255.0
 
     prediction = model.predict(img_array)
     predicted_label_index = np.argmax(prediction)
     confidence = np.max(prediction)
 
-    # Reverse mapping from index to label
     labels_reverse_map = {v: k for k, v in label_mapping.items()}
 
     predicted_label = labels_reverse_map[predicted_label_index]
@@ -521,49 +587,17 @@ def test_model(model, img_array, label_mapping):
 # Main app logic
 if st.session_state['initial_load']:
     splash = st.empty()
-    splash.markdown(create_splash_html("Creatus", '#48CFCB'), unsafe_allow_html=True)
+    splash.markdown(create_splash_html("TechnoKreate", '#48CFCB'), unsafe_allow_html=True)
     time.sleep(4)
     splash.empty()
     st.session_state['initial_load'] = False
     main_content()
 elif st.session_state['dev_command_entered']:
     dev_splash = st.empty()
-    dev_splash.markdown(create_splash_html("Welcome, Pranav Lejith {Amphibiar] (Developer)... ", 'red'), unsafe_allow_html=True)
+    dev_splash.markdown(create_splash_html("Welcome,Shreeya(Developer)... ", 'red'), unsafe_allow_html=True)
     time.sleep(4)
     dev_splash.empty()
     st.session_state['dev_command_entered'] = False
     main_content()
 else:
     main_content()
-
-# Add custom CSS to position the chat button
-st.markdown(
-    """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    div.stButton > button[kind="secondary"] {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 999;
-        border-radius: 20px;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        transition-duration: 0.4s;
-    }
-    div.stButton > button[kind="secondary"]:hover {
-        background-color: #45a049;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
