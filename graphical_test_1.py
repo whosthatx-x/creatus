@@ -1,4 +1,4 @@
-#
+# The graphical app test of TechnoKreate
 #
 #
 #         
