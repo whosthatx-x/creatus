@@ -1,3 +1,8 @@
+# The main release file of TechnoKreate, by Shreeya Prusty
+# BUG: Interpreter returning non-zero exit code.
+# TODO: Resolve Issue
+# STATUS: In Progress
+
 import streamlit as st
 import tensorflow as tf
 import numpy as np
