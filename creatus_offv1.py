@@ -1,4 +1,5 @@
-import streamogoit as st
+
+import streamlit as st
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.preprocessing import image
