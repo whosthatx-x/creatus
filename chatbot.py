@@ -1,3 +1,4 @@
+# Custom chatbot feature implementation training file (NOT IMPLEMENTED YET)
 import nltk
 from nltk.stem import WordNetLemmatizer
 import pickle
