@@ -44,7 +44,7 @@ The app is accessible at: [technokreate.streamlit.app](https://technokreate.stre
    
 2. **Train Model**: Once images are uploaded for at least two labels, TechnoKreate allows you to train a custom CNN (Convolutional Neural Network) model.
 
-3. **Test Model**: After training, you can upload a new image and test the model’s prediction accuracy with confidence levels.
+3. **Test Model**: After training, you can upload a new image and test the model’s prediction accuracy with confidence levels.    
 
 4. **Download Model**: Export your trained model in TensorFlow Lite (.tflite) or H5 (.h5) formats, along with usage code, to integrate into other projects.
 
