@@ -1,0 +1,17 @@
+# Models used for the development of Technokreate! @whosthatx-x
+streamlit
+tensorflow
+tensorflow.keras
+tensorflow.keras.models
+tensorflow.keras.layers
+tensorflow.keras.preprocessing.image
+tensorflow.keras.utils
+tensorflow.keras.callbacks
+tensorflow.keras.optimizers
+tensorflow.lite
+numpy
+sklearn.model_selection.train_test_split
+io.BytesIO
+zipfile
+time
+matplotlib.pyplot
