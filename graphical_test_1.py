@@ -1,5 +1,5 @@
 # The graphical app test of TechnoKreate
-#Formerly known as Creatus
+# Formerly known as Creatus
 #
 #         
 #      
