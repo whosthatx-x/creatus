@@ -325,7 +325,7 @@ def main_content():
         except Exception as e:
             st.error(f"Error: {e}")
 
-    st.sidebar.write("This app was created by :red[**Shreeya Prusty**](:violet[**Developer**])")
+    st.sidebar.write("This app is created by :red[**Shreeya Prusty**](:violet[**Developer**])")
     st.sidebar.write(":green[Beginners are advised not to change any of the advanced options as it affects the model training process. Any doubts or errors or any suggestions to improve the app further may be discussed with the Developer.]")
 
     st.sidebar.header(":orange[**Usage Instructions**]")
