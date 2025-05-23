@@ -1,4 +1,5 @@
 # Custom chatbot feature implementation training file (NOT IMPLEMENTED YET)
+# ISSUE: OVERUSE OF RESOURCES
 import nltk
 from nltk.stem import WordNetLemmatizer
 import pickle
