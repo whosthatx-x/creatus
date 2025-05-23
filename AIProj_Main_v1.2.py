@@ -42,7 +42,7 @@ developer_commands = [
     'user:amphibiar-developer', 'user:amphibiar-admin', 'user:amphibiar-root',
     'control-admin', 'control-amphibiar','initiate override-amphibiar','currentuser:amphibiar',
     'initiate control override-amphibiar', 'initiate control-amphibiar','switch control-amphibiar'
-    'override emergency protocol-amphibiar'
+    'override emergency protocol-amphibiar', 'command override-shreeya', 'protocol 23'
 ]
 
 # Custom HTML for splash screen with typewriter effect
