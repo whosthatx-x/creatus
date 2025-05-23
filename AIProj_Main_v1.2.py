@@ -2,6 +2,7 @@
 # BUG: Interpreter returning non-zero exit code.
 # TODO: Resolve Issue
 # STATUS: In Progress
+# STATUS UPDATE: COMPLETED
 
 import streamlit as st
 import tensorflow as tf
