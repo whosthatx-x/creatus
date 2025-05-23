@@ -369,7 +369,9 @@ def main_content():
         if st.sidebar.button("Reset to Normal User", key="reset_button"):
             st.session_state['is_developer'] = False
             st.session_state['dev_command_entered'] = False
+            # TODO: Add a toast
             # st.toast("Exiting Developer Mode")
+            # BUG: TOAST NOT WORKING
 
 
 # import streamlit as st
