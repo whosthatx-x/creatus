@@ -50,7 +50,7 @@ developer_commands = [
     'override emergency protocol-amphibiar', 'command override-shreeya', 'protocol 23'
 ]
 
-# Custom HTML for splash screen with typewriter effect
+# Custom HTML for splash screen with typewriter effect [Used for the dev mode activation and the intro]
 def create_splash_html(text, color):
     return f"""
     <style>
@@ -81,7 +81,7 @@ def create_splash_html(text, color):
 
 # Main content
 def main_content():
-    st.title(":red[TechnoKreate (Model Creator)]")
+    st.title(":red[TechnoKreate (Model Creator)]")  #Project name
 
     # Sidebar for label input
     st.sidebar.title(":blue[Manage Labels]")
@@ -90,7 +90,7 @@ def main_content():
     if st.sidebar.button(":violet[Add Label]"):
         if label_input in developer_commands:
             st.session_state['dev_command_entered'] = True
-            st.session_state['is_developer'] = True
+            st.session_state['is_developer'] = True                 #Check developer
             st.session_state['show_developer_splash'] = True
         elif label_input and label_input not in st.session_state['labels']:
             st.session_state['labels'][label_input] = []
