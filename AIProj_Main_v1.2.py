@@ -11,7 +11,6 @@ from io import BytesIO
 import time
 import matplotlib.pyplot as plt
 
-# Set page config
 st.set_page_config(page_title="TechnoKreate", page_icon='logo.png', menu_items={
     'About': "# :red[Creator]:blue[:] :violet[Shreeya Prusty(:green[Developer])]"
 }, layout='wide')
