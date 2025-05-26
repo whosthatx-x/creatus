@@ -8,10 +8,12 @@ Permission is hereby granted to any person obtaining a copy of this software and
 2. The Software may NOT be uploaded to any public or private repository, used in any service or product, or shared with any third party in any way.
 3. Any form of unauthorized copying, distribution, or misuse of the Software is strictly prohibited and may result in serious legal consequences, including but not limited to civil or criminal liability under applicable law.
 4. This license and full attribution must remain intact in all uses of the Software.
+5. Reverse engineering, decompiling, or disassembling the Software is strictly prohibited.
+6. The Software may not be used, in whole or in part, for training machine learning models or in any automated system without prior written permission.
+7. Any breach of this license will automatically terminate the rights granted herein.
 
 This Software is the exclusive intellectual property of whosthatx-x (Shreeya Prusty) and Amphibiar (Pranav Lejith), who retain all rights not expressly granted in this license.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OR MISUSE OF THE SOFTWARE.
 
 For permissions beyond the scope of this license, contact whosthatx-x.
-
