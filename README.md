@@ -78,6 +78,8 @@ TechnoKreate was created by **Shreeya Prusty** (Developer).
 
 <img src="resources/Flowchart.png" alt="Flowchart" width="900" height="950" />
 
+## License
+This project is licensed under the Private Use Only License (PUOL) v1.0. See [LICENSE](./LICENSE) for details.
 ---
 
 Explore TechnoKreate at [technokreate.streamlit.app](https://technokreate.streamlit.app)
