@@ -26,6 +26,10 @@
   <img src="https://img.shields.io/badge/tests-passing-brightgreen?style=for-the-badge" alt="Tests Passing" />
   <img src="https://img.shields.io/badge/language-English-007ACC?style=for-the-badge&logo=googletranslate&logoColor=white" alt="English Language" />
   <img src="https://img.shields.io/badge/Technokreate-FF4B4B?style=for-the-badge&logo=taipy&logoColor=white" alt="Technokreate" />
+    <a href="./LICENSE">
+  <img src="https://img.shields.io/badge/license-PUOL--v1.0-red?style=for-the-badge" alt="License: PUOL v1.0" />
+</a>
+
 </p>
 
 
