@@ -1,3 +1,7 @@
+# Protected by PUOL v1.0 – Private Use Only License
+# Do NOT copy, redistribute, or publish this code
+
+
 # Custom chatbot feature implementation training file (NOT IMPLEMENTED YET)
 # ISSUE: OVERUSE OF RESOURCES
 # TODO: RECONFIGURE ALGORITHM

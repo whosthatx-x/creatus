@@ -1,3 +1,7 @@
+# Protected by PUOL v1.0 – Private Use Only License
+# Do NOT copy, redistribute, or publish this code
+
+
 # The old project file for the CREATUS Application
 
 import streamlit as st

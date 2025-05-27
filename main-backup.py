@@ -1,3 +1,6 @@
+# Protected by PUOL v1.0 – Private Use Only License
+# Do NOT copy, redistribute, or publish this code
+
 # Creatus - Backup - v1
 # Created by dev Shreeya Prusty
 # Github: @whosthatx-x
