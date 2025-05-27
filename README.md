@@ -19,7 +19,6 @@
   <img src="https://img.shields.io/badge/Debugging-Debug-FF8C00?style=for-the-badge&logo=bug&logoColor=white" alt="Debugging" />
   <img src="https://img.shields.io/badge/USB-Device-0078D7?style=for-the-badge&logo=usb&logoColor=white" alt="USB" />
   <img src="https://img.shields.io/badge/AI-Artificial_Intelligence-8A2BE2?style=for-the-badge&logo=artificial-intelligence&logoColor=white" alt="AI" />
-  <img src="https://img.shields.io/badge/license-MIT-3BB54A?style=for-the-badge" alt="License MIT" />
   <img src="https://img.shields.io/badge/Scikit--learn-F37626?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-learn" />
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" />
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" />
