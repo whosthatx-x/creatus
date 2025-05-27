@@ -1,3 +1,7 @@
+# Protected by PUOL v1.0 – Private Use Only License
+# Do NOT copy, redistribute, or publish this code
+
+
 # The main release file of TechnoKreate, by Shreeya Prusty
 # BUG: Interpreter returning non-zero exit code.
 # TODO: Resolve Issue
@@ -6,6 +10,7 @@
 
 # Testing Github on Android
 # Edit: v6
+
 import streamlit as st
 import tensorflow as tf
 import numpy as np
